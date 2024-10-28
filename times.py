@@ -10,17 +10,24 @@ def time_range(start_time, end_time, number_of_intervals=1, gap_between_interval
                  for i in range(number_of_intervals)]
     return [(ta.strftime("%Y-%m-%d %H:%M:%S"), tb.strftime("%Y-%m-%d %H:%M:%S")) for ta, tb in sec_range]
 
-
+start_time = []
+end_time = []
 def compute_overlap_time(range1, range2):
     overlap_time = []
     for start1, end1 in range1:
         for start2, end2 in range2:
             low = max(start1, start2)
+            start_time.append(low)
             high = min(end1, end2)
+            end_time.append(high)
             overlap_time.append((low, high))
     return overlap_time
 
 if __name__ == "__main__":
     large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
-    short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
-    print(compute_overlap_time(large, short))
+    short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00")
+    result = compute_overlap_time(large, short)
+    if start_time >= end_time:
+        print("error")
+    else:
+        print(compute_overlap_time(large, short))
